@@ -1,0 +1,83 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# ASP.NET Core
+appsettings.Development.json
+appsettings.Local.json
+
+# Logs
+logs/
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Packages
+packages/
+
+# Publish output
+publish/
+wwwroot/dist/
+wwwroot/lib/
+
+# Entity Framework
+*.dbmdl
+
+# IIS Express
+iisexpress/
+
+# Generated files
+Generated/
+ScaffoldingReadMe.txt
+
+# Node.js (si usas frontend con npm)
+node_modules/
+
+# Yarn
+yarn-error.log
+yarn-debug.log
+
+# npm
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Test results
+TestResults/
+
+# Secrets
+secrets.json
+
+# Azure
+*.azurePubxml
+
+# User-specific files
+*.rsuser
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
