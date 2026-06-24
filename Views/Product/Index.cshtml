@@ -1,12 +1,38 @@
-﻿@model IEnumerable<ProductModel>
+﻿@using VisionNaranja.ViewModels
+
+@model IEnumerable<ProductViewModel>
 
 <h1>Productos</h1>
 
-@foreach (var product in Model)
-{
-    <p>@product.Id</p>
-    <p>@product.Name</p>
-    <p>@product.Description</p>
-    <p>@product.ProductTypeId</p>
-    <p>@product.EntrepreneurId</p>
-}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Emprendedor</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.ProductTypeCode</td>
+                <td>@product.EntrepreneurFullName</td>
+                <td>
+                    <div>
+                        <button class="btn btn-success" data-id="@product.Id">Editar</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" data-id="@product.Id">Eliminar</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

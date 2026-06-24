@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VisionNaranja.Data.Repositories;
+using VisionNaranja.Services;
 
 namespace VisionNaranja.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ProductRepository _repository;
+        private readonly ProductService _service;
 
-        public ProductController(ProductRepository repository)
+        public ProductController(ProductService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var products = await _repository.GetAllAsync();
+            var products = await _service.GetAllAsync();
 
             return View(products);
         }

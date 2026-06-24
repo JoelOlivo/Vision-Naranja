@@ -1,5 +1,6 @@
 using VisionNaranja.Data;
 using VisionNaranja.Data.Repositories;
+using VisionNaranja.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddSingleton<DbConnectionFactory>();
 
 //Repositories
 builder.Services.AddScoped<ProductRepository>();
+
+//Services
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 
