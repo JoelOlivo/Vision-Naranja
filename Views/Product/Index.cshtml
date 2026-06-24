@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ProductModel>
+
+<h1>Productos</h1>
+
+@foreach (var product in Model)
+{
+    <p>@product.Id</p>
+    <p>@product.Name</p>
+    <p>@product.Description</p>
+    <p>@product.ProductTypeId</p>
+    <p>@product.EntrepreneurId</p>
+}

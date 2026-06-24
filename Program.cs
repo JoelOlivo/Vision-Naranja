@@ -1,7 +1,16 @@
+using VisionNaranja.Data;
+using VisionNaranja.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Data
+builder.Services.AddSingleton<DbConnectionFactory>();
+
+//Repositories
+builder.Services.AddScoped<ProductRepository>();
 
 var app = builder.Build();
 
