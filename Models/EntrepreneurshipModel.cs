@@ -2,7 +2,7 @@
 
 namespace VisionNaranja.Models
 {
-    public class ProductModel
+    public class EntrepreneurshipModel
     {
         public int Id { get; set; }
 
@@ -10,13 +10,9 @@ namespace VisionNaranja.Models
         public string Name { get; set; } = string.Empty;
 
         public string? Description { get; set; }
-        public double? Price { get; set; }
+        public string? LogoUrl { get; set; }
 
         //Fk
-        [Required]
-        public int ProductTypeId { get; set; }
-
-        [Required]
-        public int EntrepreneurshipId { get; set; }
+        public int EntrepreneurId { get; set; }
     }
 }

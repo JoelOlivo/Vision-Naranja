@@ -20,13 +20,10 @@ namespace VisionNaranja.Data.Repositories
                     p.id AS Id,
                     p.name AS Name,
                     p.description AS Description,
+                    p.price AS Price,
                     p.product_type_id AS ProductTypeId,
-                    pt.code AS ProductTypeCode,
-                    p.entrepreneur_id AS EntrepreneurId,
-                    e.full_name AS EntrepreneurFullName
-                FROM products p
-                JOIN product_types pt ON pt.id = p.product_type_id
-                JOIN entrepreneurs e ON e.id = p.entrepreneur_id;
+                    p.entrepreneurship_id AS EntrepreneurshipId
+                FROM products p;
             ";
 
             using var connection = _dbConnectionFactory.Create();
@@ -38,9 +35,9 @@ namespace VisionNaranja.Data.Repositories
         {
             const string sql = @"
                 INSERT INTO products 
-                    (name, description, product_type_id, entrepreneur_id) 
+                    (name, description, price, product_type_id, entrepreneurship_id) 
                 VALUES 
-                    (@Name, @Description, @ProductTypeId, @EntrepreneurId);
+                    (@Name, @Description, @Price, @ProductTypeId, @EntrepreneurshipId);
             ";
 
             using var connection = _dbConnectionFactory.Create();
@@ -53,7 +50,8 @@ namespace VisionNaranja.Data.Repositories
             const string sql = @"
                 UPDATE products SET 
 	                name = @Name,
-	                description = @Description
+	                description = @Description,
+                    price = @Price,
                 WHERE id = @Id;
             ";
 

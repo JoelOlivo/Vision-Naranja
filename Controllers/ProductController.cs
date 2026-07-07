@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisionNaranja.Data.Repositories;
+using VisionNaranja.Models;
 using VisionNaranja.Services;
+using VisionNaranja.ViewModels;
 
 namespace VisionNaranja.Controllers
 {
@@ -15,9 +16,61 @@ namespace VisionNaranja.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _service.GetAllAsync();
+            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
 
             return View(products);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] ProductViewModel viewModel)
+        {
+            ProductModel model = new()
+            {
+                Name = viewModel.Name,
+                Description = viewModel.Description,
+                Price = viewModel.Price,
+                ProductTypeId = viewModel.ProductTypeId,
+                EntrepreneurshipId = viewModel.EntrepreneurshipId
+            };
+
+            bool result = await _service.AddAsync(model);
+
+            if (!result)
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(ProductViewModel viewModel, int id)
+        {
+            ProductModel model = new()
+            {
+                Id = id,
+                Name = viewModel.Name,
+                Description = viewModel.Description,
+                Price = viewModel.Price,
+                ProductTypeId = viewModel.ProductTypeId,
+                EntrepreneurshipId = viewModel.EntrepreneurshipId
+            };
+
+            bool result = await _service.UpdateAsync(model);
+
+            if (!result)
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool result = await _service.DeleteAsync(id);
+
+            if (!result)
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok();
         }
     }
 }
