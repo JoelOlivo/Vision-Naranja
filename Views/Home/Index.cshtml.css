@@ -1,0 +1,162 @@
+/* Modificación del color de fondo general a uno cálido profesional */
+body.site-wrapper {
+    background-color: #FBF9F6 !important; /* Beige suave / Blanco Hueso */
+}
+
+/* ==========================================
+   SECCIÓN DE FILTROS
+   ========================================== */
+.filter-section {
+    background-color: #ffffff;
+    border: 1px solid rgba(230, 95, 43, 0.1);
+    border-left: 5px solid var(--primary-orange);
+}
+
+.filter-title {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.custom-select {
+    border: 1px solid #E2E8F0;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease-in-out;
+}
+
+    .custom-select:focus {
+        border-color: var(--primary-orange);
+        box-shadow: 0 0 0 3px rgba(230, 95, 43, 0.15);
+    }
+
+/* ==========================================
+   TARJETA DE PRODUCTOS (ANIMADA Y DINÁMICA)
+   ========================================== */
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Animación inicial suave */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+    /* Animación cálida al pasar el cursor (Hover) */
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(230, 95, 43, 0.12);
+    }
+
+/* Contenedor fijo del carrusel */
+.product-carousel {
+    height: 240px;
+    background-color: #f1f1f1;
+}
+
+.product-card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #64748B;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Corta el texto largo a 3 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+/* ==========================================
+   COMPONENTES INTERNOS (BRANDING & MARKETING)
+   ========================================== */
+.branding-badge {
+    display: flex;
+    align-items: center;
+    background-color: #F8FAFC;
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid #EDF2F7;
+    gap: 0.75rem;
+}
+
+.entrepreneur-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-orange);
+}
+
+.business-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-left: auto; /* Empuja el logo a la derecha */
+    border: 1px solid #E2E8F0;
+}
+
+.branding-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.entrepreneur-name {
+    font-size: 0.8rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+.business-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-orange);
+}
+
+/* Footer interno de la tarjeta */
+.product-footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-tag {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+/* Botón de WhatsApp Integrado */
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .btn-whatsapp:hover {
+        background-color: #1ebd57;
+        transform: scale(1.03);
+    }

@@ -1,8 +1,93 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Catálogo";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="catalog-wrapper">
+    <div class="filter-section mb-5 p-4 rounded-4 shadow-sm">
+        <h5 class="filter-title mb-3"><i class="fa-solid fa-sliders me-2"></i> Filtrar Catálogo</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Tipo de Producto</label>
+                <select class="form-select custom-select">
+                    <option value="">Todos los productos / servicios</option>
+                    <option value="1">Artesanías</option>
+                    <option value="2">Gastronomía</option>
+                    <option value="3">Servicios Digitales</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Emprendedor</label>
+                <select class="form-select custom-select">
+                    <option value="">Todos los emprendedores</option>
+                    <option value="1">María Carmen</option>
+                    <option value="2">Carlos Espinoza</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Emprendimiento</label>
+                <select class="form-select custom-select">
+                    <option value="">Todos los negocios</option>
+                    <option value="1">ArteSano Ec</option>
+                    <option value="2">Café Don Naranja</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        <div class="col">
+            <div class="product-card h-100">
+
+                <div id="carouselProduct1" class="carousel slide product-carousel" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselProduct1" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#carouselProduct1" data-bs-slide-to="1"></button>
+                    </div>
+                    <div class="carousel-inner h-100">
+                        <div class="carousel-item active h-100">
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500&auto=format&fit=crop" class="d-block w-100 h-100 object-fit-cover" alt="Producto 1">
+                        </div>
+                        <div class="carousel-item h-100">
+                            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop" class="d-block w-100 h-100 object-fit-cover" alt="Producto 2">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <div class="product-card-body">
+
+                    <div class="branding-badge mb-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop" class="entrepreneur-avatar" alt="Foto Emprendedor" title="Emprendedor">
+                        <div class="branding-text">
+                            <span class="entrepreneur-name">Por: María Carmen</span>
+                            <span class="business-name"><i class="fa-solid fa-shop me-1"></i> ArteSano Ec</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1541535650810-10d26f5c2ab3?w=100&auto=format&fit=crop" class="business-logo" alt="Logo Emprendimiento" title="Logo Negocio">
+                    </div>
+
+                    <h5 class="product-title">Mochila Textil Artesanal</h5>
+                    <p class="product-description">Hecha a mano con fibras naturales y tintes orgánicos. Diseño exclusivo con patrones geométricos de la región.</p>
+
+                    <div class="product-footer-meta mt-auto">
+                        <div class="price-tag">$45.00</div>
+
+                        <a href="https://wa.me/593999999999?text=Hola%20María,%20estoy%20interesado%20en%20el%20producto:%20Mochila%20Textil" target="_blank" class="btn btn-whatsapp">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.948h.003c4.368 0 7.926-3.559 7.93-7.93a7.9 7.9 0 0 0-2.354-5.643h-.002zm-5.607 11.326a6.52 6.52 0 0 1-3.308-.905l-.237-.14-2.455.644.656-2.39-.153-.244a6.51 6.51 0 0 1-1.002-3.423c.003-3.593 2.922-6.512 6.516-6.512a6.51 6.51 0 0 1 4.659 1.913 6.5 6.5 0 0 1 1.912 4.66c-.004 3.593-2.922 6.513-6.514 6.513m3.575-4.957c-.199-.1-.179-.199-.536-.356-.154-.065-.835-.412-.963-.458-.128-.047-.222-.07-.316.075-.094.145-.365.458-.446.548-.082.092-.164.102-.364.002-.2-.1-.843-.311-1.605-.99-status-.593-.53-1.002-.647-1.102-.1-.1-.012-.154.088-.254.09-.089.199-.234.299-.35.1-.114.133-.195.199-.32.067-.13.034-.243-.017-.344-.051-.1-.447-1.074-.612-1.47c-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
+                            </svg>
+                            Contactar
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

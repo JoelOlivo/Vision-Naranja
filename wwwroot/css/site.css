@@ -1,31 +1,31 @@
-html {
-  font-size: 14px;
+:root {
+    --primary-orange: #E65F2B; /* Naranja profesional y enérgico */
+    --hover-orange: #C94E20; /* Variación más oscura para estados hover */
+    --dark-bg: #1E2229; /* Fondo oscuro elegante para header/footer */
+    --light-gray: #F8F9FA; /* Fondo suave para el cuerpo */
+    --text-dark: #2D3139; /* Color de texto principal */
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Forzar la estructura 'Sticky Footer' usando Flexbox en el body */
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    body.site-wrapper {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--light-gray);
+        color: var(--text-dark);
+    }
+
+.main-content {
+    flex: 1 0 auto; /* Empuja el footer hacia abajo si hay poco contenido */
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Personalización del Enfoque (Focus) de accesibilidad con el color corporativo */
+.form-control:focus, .btn:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 0.25rem rgba(230, 95, 43, 0.25);
 }
