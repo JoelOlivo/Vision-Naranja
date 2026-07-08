@@ -21,6 +21,25 @@ namespace VisionNaranja.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
+
+            return Ok(products);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById(int id)
+        {
+            ProductViewModel? product = await _service.GetByIdAsync(id);
+
+            if (product == null)
+                return NotFound();
+
+            return Ok(product);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductViewModel viewModel)
         {
@@ -41,8 +60,8 @@ namespace VisionNaranja.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ProductViewModel viewModel, int id)
+        [HttpPut]
+        public async Task<IActionResult> Update(int id, [FromBody] ProductViewModel viewModel)
         {
             ProductModel model = new()
             {
@@ -62,7 +81,7 @@ namespace VisionNaranja.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _service.DeleteAsync(id);

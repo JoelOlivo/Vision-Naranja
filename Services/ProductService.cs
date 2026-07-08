@@ -13,6 +13,11 @@ namespace VisionNaranja.Services
             return await _repository.GetAllAsync();
         }
 
+        public async Task<ProductViewModel?> GetByIdAsync(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
         public async Task<bool> AddAsync(ProductModel model)
         {
             return await _repository.AddAsync(model);

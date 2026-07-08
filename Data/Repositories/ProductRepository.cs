@@ -31,6 +31,25 @@ namespace VisionNaranja.Data.Repositories
             return await connection.QueryAsync<ProductViewModel>(sql);
         }
 
+        public async Task<ProductViewModel?> GetByIdAsync(int id)
+        {
+            const string sql = @"
+                SELECT
+                    p.id AS Id,
+                    p.name AS Name,
+                    p.description AS Description,
+                    p.price AS Price,
+                    p.product_type_id AS ProductTypeId,
+                    p.entrepreneurship_id AS EntrepreneurshipId
+                FROM products p
+                WHERE p.id = @Id;
+            ";
+
+            using var connection = _dbConnectionFactory.Create();
+
+            return await connection.QueryFirstOrDefaultAsync<ProductViewModel>(sql, new { Id = id });
+        }
+
         public async Task<bool> AddAsync(ProductModel product)
         {
             const string sql = @"
@@ -51,7 +70,7 @@ namespace VisionNaranja.Data.Repositories
                 UPDATE products SET 
 	                name = @Name,
 	                description = @Description,
-                    price = @Price,
+                    price = @Price
                 WHERE id = @Id;
             ";
 

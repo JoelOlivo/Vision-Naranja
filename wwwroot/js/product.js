@@ -1,28 +1,12 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
 
     const modal = new bootstrap.Modal(document.getElementById("productModal"));
-    const btnCreate = document.getElementById("btnCreate");
 
-    btnCreate.addEventListener("click", () => {
-        modal.show();
-    });
+    document.getElementById("btnCreate")
+        .addEventListener("click", () => openCreateModal(modal));
 
-    const btnSave = document.getElementById("btnSave");
-
-    btnSave.addEventListener("click", async () => {
-
-        const product = {
-            name: document.getElementById("name").value,
-            description: document.getElementById("description").value,
-            price: parseFloat(document.getElementById("price").value),
-            productTypeId: parseInt(document.getElementById("productTypeId").value),
-            entrepreneurshipId: parseInt(document.getElementById("entrepreneurshipId").value)
-        }
-
-        await createProduct(product);
-
-        modal.hide();
-    });
+    document.getElementById("btnSaveOrUpdate")
+        .addEventListener("click", async () => saveProduct(modal));
 
     document.addEventListener("click", async (e) => {
 
@@ -30,42 +14,51 @@
 
             const id = Number(e.target.dataset.id);
 
-            console.log("Editar", id);
-
-            // await loadProduct(id);
-            // modal.show();
+            await openEditModal(id, modal);
         }
-
 
         if (e.target.classList.contains("btn-delete")) {
 
             const id = Number(e.target.dataset.id);
 
-            console.log("Eliminar", id);
-
             await deleteProduct(id);
+
+            const products = await getProducts();
+            await renderProducts(products);
         }
     });
 
-    // document.addEventListener("click", async (e) => {
-    //     console.log("en proceso...");
-    // });
-
-    // document.addEventListener("click", async (e) => {
-    //     console.log("en proceso...");
-    //     // const btn = e.target.closest(".btn-delete");
-
-    //     // if (!btn) return;
-
-    //     // const id = btn.dataset.id;
-
-    //     // await deleteProduct(id);
-    // });
-
 });
 
+async function getProducts() {
+
+    const response = await fetch("/Product/GetAll");
+
+    if (!response.ok) {
+        console.error("Error obteniendo productos");
+        return;
+    }
+
+    const products = await response.json();
+
+    return products;
+}
+
+async function getProductById(id) {
+
+    const response = await fetch(`/Product/GetById/${id}`);
+
+    if (!response.ok) {
+        console.error("Error obteniendo producto");
+        return;
+    }
+
+    const product = await response.json();
+
+    return product;
+}
+
 async function createProduct(product) {
-    console.log(product);
 
     const response = await fetch("/Product/Add", {
         method: "POST",
@@ -78,11 +71,10 @@ async function createProduct(product) {
     if (!response.ok) {
         console.error("Error al crear el producto");
     }
-
-    location.reload();
 }
 
 async function updateProduct(product) {
+
     const response = await fetch(`/Product/Update/${product.id}`, {
         method: "PUT",
         headers: {
@@ -94,10 +86,23 @@ async function updateProduct(product) {
     if (!response.ok) {
         console.error("Error al actualizar el producto");
     }
+}
+
+async function saveProduct(modal) {
+
+    const product = getProductFromForm();
+
+    if (product.id) {
+        await updateProduct(product);
+    }
+    else {
+        await createProduct(product);
+    }
 
     modal.hide();
 
-    location.reload();
+    const products = await getProducts();
+    await renderProducts(products);
 }
 
 async function deleteProduct(id) {
@@ -109,6 +114,72 @@ async function deleteProduct(id) {
     if (!response.ok) {
         console.error("Error al eliminar el producto");
     }
+}
 
-    location.reload();
+function openCreateModal(modal) {
+
+    clearModal();
+    document.querySelector(".modal-title").textContent = "Crear producto";
+    modal.show();
+}
+
+async function openEditModal(id, modal) {
+
+    const product = await getProductById(id);
+    loadModal(product);
+
+    document.querySelector(".modal-title").textContent = "Editar producto";
+    modal.show();
+}
+
+function getProductFromForm() {
+
+    return {
+        id: document.getElementById("productId").value,
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        price: parseFloat(document.getElementById("price").value),
+        productTypeId: parseInt(document.getElementById("productTypeId").value),
+        entrepreneurshipId: parseInt(document.getElementById("entrepreneurshipId").value)
+    };
+}
+
+function renderProducts(products) {
+
+    const tbody = document.getElementById("tbodyProduct");
+
+    tbody.innerHTML = "";
+
+    products.forEach(product => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${product.name}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                <td>${product.productTypeId}</td>
+                <td>${product.entrepreneurshipId}</td>
+                <td>
+                    <button class="btn btn-success btn-edit" data-id="${product.id}">Editar</button>
+                    <button class="btn btn-danger btn-delete" data-id="${product.id}">Eliminar</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function clearModal() {
+
+    document.getElementById("productForm").reset();
+    document.getElementById("productId").value = "";
+}
+
+function loadModal(product) {
+
+    document.getElementById("productId").value = product.id;
+    document.getElementById("name").value = product.name;
+    document.getElementById("description").value = product.description;
+    document.getElementById("price").value = product.price;
+    document.getElementById("productTypeId").value = product.productTypeId;
+    document.getElementById("entrepreneurshipId").value = product.entrepreneurshipId;
 }

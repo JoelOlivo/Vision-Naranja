@@ -19,7 +19,7 @@
         </tr>
     </thead>
 
-    <tbody>
+    <tbody id="tbodyProduct">
         @foreach (var product in Model)
         {
             <tr>
@@ -29,12 +29,8 @@
                 <td>@product.ProductTypeId</td>
                 <td>@product.EntrepreneurshipId</td>
                 <td>
-                    <div>
-                        <button class="btn btn-success btn-edit" data-id="@product.Id">Editar</button>
-                    </div>
-                    <div>
-                        <button class="btn btn-danger btn-delete" data-id="@product.Id">Eliminar</button>
-                    </div>
+                    <button class="btn btn-success btn-edit" data-id="@product.Id">Editar</button>
+                    <button class="btn btn-danger btn-delete" data-id="@product.Id">Eliminar</button>
                 </td>
             </tr>
         }
@@ -58,7 +54,7 @@
             <div class="modal-body">
 
                 <form id="productForm">
-
+                    <input hidden="hidden" id="productId">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input id="name"
@@ -109,7 +105,7 @@
                 </button>
 
                 <button class="btn btn-primary"
-                        id="btnSave">
+                        id="btnSaveOrUpdate">
                     Guardar
                 </button>
             </div>
