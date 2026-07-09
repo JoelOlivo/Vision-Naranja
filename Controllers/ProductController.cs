@@ -41,7 +41,7 @@ namespace VisionNaranja.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] ProductViewModel viewModel)
+        public async Task<IActionResult> Add([FromForm] ProductViewModel viewModel)
         {
             ProductModel model = new()
             {
@@ -52,7 +52,7 @@ namespace VisionNaranja.Controllers
                 EntrepreneurshipId = viewModel.EntrepreneurshipId
             };
 
-            bool result = await _service.AddAsync(model);
+            bool result = await _service.AddAsync(model, viewModel.Files);
 
             if (!result)
                 return StatusCode(StatusCodes.Status500InternalServerError);

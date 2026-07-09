@@ -50,18 +50,20 @@ namespace VisionNaranja.Data.Repositories
             return await connection.QueryFirstOrDefaultAsync<ProductViewModel>(sql, new { Id = id });
         }
 
-        public async Task<bool> AddAsync(ProductModel product)
+        public async Task<int> AddAsync(ProductModel product)
         {
             const string sql = @"
                 INSERT INTO products 
                     (name, description, price, product_type_id, entrepreneurship_id) 
                 VALUES 
                     (@Name, @Description, @Price, @ProductTypeId, @EntrepreneurshipId);
+
+                SELECT LAST_INSERT_ID();
             ";
 
             using var connection = _dbConnectionFactory.Create();
 
-            return await connection.ExecuteAsync(sql, product) > 0;
+            return await connection.ExecuteScalarAsync<int>(sql, product);
         }
 
         public async Task<bool> UpdateAsync(ProductModel product)

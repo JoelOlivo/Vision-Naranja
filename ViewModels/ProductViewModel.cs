@@ -8,5 +8,6 @@
         public double? Price { get; set; }
         public int ProductTypeId { get; set; }
         public int EntrepreneurshipId { get; set; }
+        public IEnumerable<IFormFile> Files { get; set; } = [];
     }
 }

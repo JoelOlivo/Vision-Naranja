@@ -62,10 +62,7 @@ async function createProduct(product) {
 
     const response = await fetch("/Product/Add", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(product)
+        body: product
     });
 
     if (!response.ok) {
@@ -92,7 +89,9 @@ async function saveProduct(modal) {
 
     const product = getProductFromForm();
 
-    if (product.id) {
+    const id = document.getElementById("productId").value;
+
+    if (id) {
         await updateProduct(product);
     }
     else {
@@ -134,14 +133,22 @@ async function openEditModal(id, modal) {
 
 function getProductFromForm() {
 
-    return {
-        id: document.getElementById("productId").value,
-        name: document.getElementById("name").value,
-        description: document.getElementById("description").value,
-        price: parseFloat(document.getElementById("price").value),
-        productTypeId: parseInt(document.getElementById("productTypeId").value),
-        entrepreneurshipId: parseInt(document.getElementById("entrepreneurshipId").value)
-    };
+    const formData = new FormData();
+
+    formData.append("Id", document.getElementById("productId").value);
+    formData.append("Name", document.getElementById("name").value);
+    formData.append("Description", document.getElementById("description").value);
+    formData.append("Price", document.getElementById("price").value);
+    formData.append("ProductTypeId", document.getElementById("productTypeId").value);
+    formData.append("EntrepreneurshipId", document.getElementById("entrepreneurshipId").value);
+
+    const files = document.getElementById("files").files;
+
+    for (const file of files) {
+        formData.append("Files", file);
+    }
+
+    return formData;
 }
 
 function renderProducts(products) {

@@ -1,6 +1,8 @@
+using Microsoft.Extensions.FileProviders;
 using VisionNaranja.Data;
 using VisionNaranja.Data.Repositories;
 using VisionNaranja.Services;
+using VisionNaranja.Services.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +14,11 @@ builder.Services.AddSingleton<DbConnectionFactory>();
 
 //Repositories
 builder.Services.AddScoped<ProductRepository>();
+builder.Services.AddScoped<ProductMediaRepository>();
 
 //Services
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<FileStorageService>();
 
 var app = builder.Build();
 
@@ -38,5 +42,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        builder.Configuration["Storage:RootPath"]!),
+
+    RequestPath = "/media"
+});
 
 app.Run();
