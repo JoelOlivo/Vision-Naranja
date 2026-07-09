@@ -24,7 +24,16 @@ namespace VisionNaranja.Services
 
         public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            IEnumerable<ProductViewModel> products = await _repository.GetAllAsync();
+
+            foreach (ProductViewModel product in products)
+            {
+                IEnumerable<ProductMediaViewModel> medias = await _productMediaRepository.GetByProductIdAsync(product.Id);
+
+                product.ImagePaths = medias.Select(media => media.MediaPath);
+            }
+
+            return products;
         }
 
         public async Task<ProductViewModel?> GetByIdAsync(int id)

@@ -1,14 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VisionNaranja.Models;
+using VisionNaranja.Services;
+using VisionNaranja.ViewModels;
 
 namespace VisionNaranja.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ProductService _service;
+
+        public HomeController(ProductService service)
         {
-            return View();
+            _service = service;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
+
+            return View(products);
         }
 
         public IActionResult Privacy()

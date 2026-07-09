@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using VisionNaranja.Models;
+using VisionNaranja.ViewModels;
 
 namespace VisionNaranja.Data.Repositories
 {
@@ -7,7 +8,7 @@ namespace VisionNaranja.Data.Repositories
     {
         private readonly DbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
 
-        public async Task<IEnumerable<ProductMediaModel>> GetByProductIdAsync(int productId)
+        public async Task<IEnumerable<ProductMediaViewModel>> GetByProductIdAsync(int productId)
         {
             const string sql = @"
                 SELECT
@@ -22,7 +23,7 @@ namespace VisionNaranja.Data.Repositories
 
             using var connection = _dbConnectionFactory.Create();
 
-            return await connection.QueryAsync<ProductMediaModel>(sql, new { ProductId = productId });
+            return await connection.QueryAsync<ProductMediaViewModel>(sql, new { ProductId = productId });
         }
 
         public async Task<bool> AddAsync(ProductMediaModel productMedia)

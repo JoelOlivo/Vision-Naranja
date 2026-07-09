@@ -21,9 +21,22 @@ namespace VisionNaranja.Data.Repositories
                     p.name AS Name,
                     p.description AS Description,
                     p.price AS Price,
+    
                     p.product_type_id AS ProductTypeId,
-                    p.entrepreneurship_id AS EntrepreneurshipId
-                FROM products p;
+                    pt.name AS ProductTypeName,
+    
+                    p.entrepreneurship_id AS EntrepreneurshipId,
+                    esh.name AS EntrepreneurshipName,
+                    esh.logo_path AS EntrepreneurshipLogoPath,
+    
+                    e.id AS EntrepreneurId,
+                    e.full_name AS EntrepreneurName,
+                    e.cell_phone_number AS EntrepreneurCellPhoneNumber,
+                    e.profile_photo_path AS EntrepreneurProfilePhotoPath
+                FROM products p
+                JOIN product_types pt ON pt.id = p.product_type_id
+                JOIN entrepreneurships esh ON esh.id = p.entrepreneurship_id
+                JOIN entrepreneurs e ON e.id = esh.entrepreneur_id;
             ";
 
             using var connection = _dbConnectionFactory.Create();
