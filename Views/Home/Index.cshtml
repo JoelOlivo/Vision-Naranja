@@ -1,6 +1,6 @@
-﻿@using VisionNaranja.ViewModels
+﻿@using VisionNaranja.ViewModels.Home
 
-@model IEnumerable<ProductViewModel>
+@model GetHomeViewModel
 
 @{
     ViewData["Title"] = "Catálogo";
@@ -40,91 +40,89 @@
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-        @foreach (var product in Model)
+        @foreach (var product in Model.Products)
         {
             <div class="col">
                 <div class="product-card h-100">
+
+                    <!-- CARRUSEL DE IMÁGENES -->
                     <div id="carouselProduct@(product.Id)" class="carousel slide product-carousel" data-bs-ride="carousel">
-                    
+
                         <div class="carousel-inner h-100">
-                            @if(product.ImagePaths.Any())
+                            @if (product.Media != null && product.Media.Any())
                             {
                                 int index = 0;
+                                // Ordenamos para que la imagen declarada como 'IsPrimary' sea la primera del carrusel
+                                var orderedMedia = product.Media.OrderByDescending(m => m.IsPrimary);
 
-                                foreach(var image in product.ImagePaths)
+                                foreach (var media in orderedMedia)
                                 {
                                     <div class="carousel-item @(index == 0 ? "active" : "") h-100">
-
-                                        <img src="media/@image"
-                                                class="d-block w-100 h-100 object-fit-cover"
-                                                alt="@product.Name">
-
+                                        <!-- Se asume que MediaPath ya trae la ruta web correcta -->
+                                        <img src="@($"/media{media.MediaPath}")"
+                                             class="d-block w-100 h-100 object-fit-cover"
+                                             alt="@product.Name - Imagen @(index + 1)">
                                     </div>
-
                                     index++;
                                 }
                             }
                             else
                             {
+                                <!-- Imagen por defecto si el producto no tiene archivos multimedia -->
                                 <div class="carousel-item active h-100">
-
                                     <img src="/images/no-product.png"
-                                            class="d-block w-100 h-100 object-fit-cover"
-                                            alt="Sin imagen">
-
+                                         class="d-block w-100 h-100 object-fit-cover"
+                                         alt="Sin imagen disponible">
                                 </div>
                             }
                         </div>
 
-                        @if (product.ImagePaths.Count() > 1)
+                        @if (product.Media != null && product.Media.Count() > 1)
                         {
                             <button class="carousel-control-prev"
                                     type="button"
                                     data-bs-target="#carouselProduct@(product.Id)"
                                     data-bs-slide="prev">
-
-                                <span class="carousel-control-prev-icon"></span>
-
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             </button>
-
 
                             <button class="carousel-control-next"
                                     type="button"
                                     data-bs-target="#carouselProduct@(product.Id)"
                                     data-bs-slide="next">
-
-                                <span class="carousel-control-next-icon"></span>
-
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             </button>
                         }
-                        
                     </div>
 
+                    <!-- CUERPO DE LA TARJETA -->
                     <div class="product-card-body">
-                    <!-- INFORMACIÓN EMPRENDEDOR -->
-                    <div class="branding-badge mb-3">
-                        <img src="media/@product.EntrepreneurProfilePhotoPath"
-                                class="entrepreneur-avatar"
-                                alt="@product.EntrepreneurName">
 
-                        <div class="branding-text">
-                            <span class="entrepreneur-name">
-                                Por: @product.EntrepreneurName
-                            </span>
+                        <!-- INFORMACIÓN DEL EMPRENDEDOR -->
+                        <div class="branding-badge mb-3">
+                            <img src="@product.EntrepreneurProfilePhotoPath"
+                                 class="entrepreneur-avatar"
+                                 alt="Foto de @product.EntrepreneurName"
+                                 onerror="this.src='/images/default-avatar.png'">
 
+                            <div class="branding-text">
+                                <span class="entrepreneur-name">
+                                    Por: @product.EntrepreneurName
+                                </span>
 
-                            <span class="business-name">
-                                <i class="fa-solid fa-shop me-1"></i>
-                                @product.EntrepreneurshipName
-                            </span>
+                                <span class="business-name">
+                                    <i class="fa-solid fa-shop me-1"></i>
+                                    @product.EntrepreneurshipName
+                                </span>
+                            </div>
+
+                            <img src="@product.EntrepreneurshipLogoPath"
+                                 class="business-logo"
+                                 alt="Logo @product.EntrepreneurshipName"
+                                 onerror="this.src='/images/default-logo.png'">
                         </div>
 
-                        <img src="media/@product.EntrepreneurshipLogoPath"
-                                class="business-logo"
-                                alt="@product.EntrepreneurshipName">
-                    </div>
-
-                        <!-- PRODUCTO -->
+                        <!-- DETALLES DEL PRODUCTO -->
                         <h5 class="product-title">
                             @product.Name
                         </h5>
@@ -133,22 +131,36 @@
                             @product.Description
                         </p>
 
+                        <!-- METADATOS Y ACCIONES -->
                         <div class="product-footer-meta mt-auto">
                             <div class="price-tag">
-                                $@product.Price?.ToString("0.00")
+                                @if (product.Price.HasValue)
+                                {
+                                    @:$@product.Price.Value.ToString("N2")
+                                }
+                                else
+                                {
+                                    @:Gratis / Cotizar
+                                }
                             </div>
 
-                            <a href="https://wa.me/@product.EntrepreneurCellPhoneNumber?text=Hola,%20estoy%20interesado%20en%20@product.Name"
+                            <!-- Botón dinámico de WhatsApp con texto codificado para URL -->
+                            @{
+                                var whatsappText = Uri.EscapeDataString($"Hola {product.EntrepreneurName}, estoy interesado en tu producto: {product.Name} visto en Visión Naranja.");
+                                var whatsappUrl = $"https://wa.me/{product.EntrepreneurCellPhoneNumber}?text={whatsappText}";
+                            }
+                            <a href="@whatsappUrl"
                                target="_blank"
                                class="btn btn-whatsapp">
-
                                 <i class="fa-brands fa-whatsapp"></i>
                                 Contactar
                             </a>
                         </div>
-                </div>
+                    </div>
+
                 </div>
             </div>
         }
     </div>
+
 </div>

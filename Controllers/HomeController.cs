@@ -2,24 +2,22 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VisionNaranja.Models;
 using VisionNaranja.Services;
-using VisionNaranja.ViewModels;
 
 namespace VisionNaranja.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ProductService _service;
+        private readonly HomeService _service;
 
-        public HomeController(ProductService service)
+        public HomeController(HomeService service)
         {
             _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            //IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
-            IEnumerable<ProductViewModel> products = [];
-            return View(products);
+            var homeViewModel = await _service.GetAsync();
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

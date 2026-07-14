@@ -18,6 +18,7 @@ builder.Services.AddScoped<ProductMediaRepository>();
 
 //Services
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<FileStorageService>();
 
 var app = builder.Build();

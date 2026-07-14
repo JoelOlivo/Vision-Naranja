@@ -1,4 +1,6 @@
-﻿namespace VisionNaranja.ViewModels
+﻿using VisionNaranja.ViewModels.ProductMedia;
+
+namespace VisionNaranja.ViewModels.Product
 {
     public class ProductViewModel
     {
@@ -23,7 +25,6 @@
         public string? EntrepreneurProfilePhotoPath { get; set; }
 
         //Files
-        public IEnumerable<IFormFile> Files { get; set; } = [];
-        public IEnumerable<string> ImagePaths { get; set; } = [];
+        public IEnumerable<GetProductMediaViewModel> Media { get; set; } = [];
     }
 }
