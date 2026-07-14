@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisionNaranja.Models;
 using VisionNaranja.Services;
-using VisionNaranja.ViewModels;
+using VisionNaranja.ViewModels.Product;
 
 namespace VisionNaranja.Controllers
 {
@@ -16,7 +15,7 @@ namespace VisionNaranja.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
+            IEnumerable<GetProductViewModel> products = await _service.GetAllByEntrepreneurshipAsync(1);
 
             return View(products);
         }
@@ -24,7 +23,7 @@ namespace VisionNaranja.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
+            IEnumerable<GetProductViewModel> products = await _service.GetAllByEntrepreneurshipAsync(1);
 
             return Ok(products);
         }
@@ -32,7 +31,7 @@ namespace VisionNaranja.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
-            ProductViewModel? product = await _service.GetByIdAsync(id);
+            GetProductViewModel? product = await _service.GetByIdAsync(id);
 
             if (product == null)
                 return NotFound();
@@ -41,18 +40,9 @@ namespace VisionNaranja.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm] ProductViewModel viewModel)
+        public async Task<IActionResult> Add([FromForm] AddProductViewModel viewModel)
         {
-            ProductModel model = new()
-            {
-                Name = viewModel.Name,
-                Description = viewModel.Description,
-                Price = viewModel.Price,
-                ProductTypeId = viewModel.ProductTypeId,
-                EntrepreneurshipId = viewModel.EntrepreneurshipId
-            };
-
-            bool result = await _service.AddAsync(model, viewModel.Files);
+            bool result = await _service.AddAsync(viewModel, viewModel.Files);
 
             if (!result)
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -61,16 +51,14 @@ namespace VisionNaranja.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductViewModel viewModel)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateProductViewModel viewModel)
         {
-            ProductModel model = new()
+            UpdateProductViewModel model = new()
             {
                 Id = id,
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Price = viewModel.Price,
-                ProductTypeId = viewModel.ProductTypeId,
-                EntrepreneurshipId = viewModel.EntrepreneurshipId
+                Price = viewModel.Price
             };
 
             bool result = await _service.UpdateAsync(model);

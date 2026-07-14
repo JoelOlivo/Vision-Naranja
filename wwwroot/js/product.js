@@ -74,10 +74,7 @@ async function updateProduct(product) {
 
     const response = await fetch(`/Product/Update/${product.id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(product)
+        body: product
     });
 
     if (!response.ok) {
@@ -118,12 +115,14 @@ async function deleteProduct(id) {
 function openCreateModal(modal) {
 
     clearModal();
+    toggleCreateFields(true);
     document.querySelector(".modal-title").textContent = "Crear producto";
     modal.show();
 }
 
 async function openEditModal(id, modal) {
 
+    toggleCreateFields(false);
     const product = await getProductById(id);
     loadModal(product);
 
@@ -138,7 +137,7 @@ function getProductFromForm() {
     formData.append("Id", document.getElementById("productId").value);
     formData.append("Name", document.getElementById("name").value);
     formData.append("Description", document.getElementById("description").value);
-    formData.append("Price", document.getElementById("price").value);
+    formData.append("Price", document.getElementById("price").value.replace(".", ","));
     formData.append("ProductTypeId", document.getElementById("productTypeId").value);
     formData.append("EntrepreneurshipId", document.getElementById("entrepreneurshipId").value);
 
@@ -164,8 +163,6 @@ function renderProducts(products) {
                 <td>${product.name}</td>
                 <td>${product.description}</td>
                 <td>${product.price}</td>
-                <td>${product.productTypeId}</td>
-                <td>${product.entrepreneurshipId}</td>
                 <td>
                     <button class="btn btn-success btn-edit" data-id="${product.id}">Editar</button>
                     <button class="btn btn-danger btn-delete" data-id="${product.id}">Eliminar</button>
@@ -189,4 +186,11 @@ function loadModal(product) {
     document.getElementById("price").value = product.price;
     document.getElementById("productTypeId").value = product.productTypeId;
     document.getElementById("entrepreneurshipId").value = product.entrepreneurshipId;
+}
+
+function toggleCreateFields(show) {
+
+    document.getElementById("divProductType").style.display = show ? "" : "none";
+    document.getElementById("divEntrepreneurship").style.display = show ? "" : "none";
+    document.getElementById("divFiles").style.display = show ? "" : "none";
 }

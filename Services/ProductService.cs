@@ -1,8 +1,8 @@
 ﻿using VisionNaranja.Data.Repositories;
-using VisionNaranja.Models;
 using VisionNaranja.Services.FileStorage;
 using VisionNaranja.Services.Storage;
-using VisionNaranja.ViewModels;
+using VisionNaranja.ViewModels.Product;
+using VisionNaranja.ViewModels.ProductMedia;
 
 namespace VisionNaranja.Services
 {
@@ -22,26 +22,17 @@ namespace VisionNaranja.Services
             _fileStorageService = fileStorageService;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
+        public async Task<IEnumerable<GetProductViewModel>> GetAllByEntrepreneurshipAsync(int entrepreneurshipId)
         {
-            IEnumerable<ProductViewModel> products = await _repository.GetAllAsync();
-
-            foreach (ProductViewModel product in products)
-            {
-                IEnumerable<ProductMediaViewModel> medias = await _productMediaRepository.GetByProductIdAsync(product.Id);
-
-                product.ImagePaths = medias.Select(media => media.MediaPath);
-            }
-
-            return products;
+            return await _repository.GetAllByEntrepreneurshipAsync(entrepreneurshipId);
         }
 
-        public async Task<ProductViewModel?> GetByIdAsync(int id)
+        public async Task<GetProductViewModel?> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<bool> AddAsync(ProductModel product, IEnumerable<IFormFile> files)
+        public async Task<bool> AddAsync(AddProductViewModel product, IEnumerable<IFormFile> files)
         {
             int productId = await _repository.AddAsync(product);
 
@@ -58,13 +49,13 @@ namespace VisionNaranja.Services
 
             foreach (var file in storedFiles)
             {
-                await _productMediaRepository.AddAsync(new ProductMediaModel
-                {
-                    FileName = file.FileName,
-                    MediaPath = file.RelativePath,
-                    ProductId = productId,
-                    IsPrimary = isPrimary
-                });
+                await _productMediaRepository.AddAsync(new AddProductMediaViewModel
+                (
+                    file.FileName,
+                    file.RelativePath,
+                    isPrimary,
+                    productId
+                ));
 
                 isPrimary = false;
             }
@@ -72,14 +63,26 @@ namespace VisionNaranja.Services
             return true;
         }
 
-        public async Task<bool> UpdateAsync(ProductModel model)
+        public async Task<bool> UpdateAsync(UpdateProductViewModel model)
         { 
             return await _repository.UpdateAsync(model);
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            return await _repository.DeleteAsync(id);
+            bool mediasDeleted = await _productMediaRepository.DeleteByProductIdAsync(id);
+
+            if (!mediasDeleted)
+                return false;
+
+            bool productDeleted = await _repository.DeleteAsync(id);
+
+            if (!productDeleted)
+                return false;
+
+            _fileStorageService.DeleteDirectory(FileStorageFolder.Products, id);
+
+            return true;
         }
     }
 }

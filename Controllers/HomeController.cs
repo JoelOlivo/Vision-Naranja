@@ -17,8 +17,8 @@ namespace VisionNaranja.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
-
+            //IEnumerable<ProductViewModel> products = await _service.GetAllAsync();
+            IEnumerable<ProductViewModel> products = [];
             return View(products);
         }
 

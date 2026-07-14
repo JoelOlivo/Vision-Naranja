@@ -1,6 +1,6 @@
-﻿@using VisionNaranja.ViewModels
+﻿@using VisionNaranja.ViewModels.Product
 
-@model IEnumerable<ProductViewModel>
+@model IEnumerable<GetProductViewModel>
 
 <h1>Productos</h1>
 
@@ -14,8 +14,7 @@
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
-            <th>Tipo producto</th>
-            <th>Emprendimiento</th>
+            <th>Acción</th>
         </tr>
     </thead>
 
@@ -26,8 +25,6 @@
                 <td>@product.Name</td>
                 <td>@product.Description</td>
                 <td>@product.Price</td>
-                <td>@product.ProductTypeId</td>
-                <td>@product.EntrepreneurshipId</td>
                 <td>
                     <button class="btn btn-success btn-edit" data-id="@product.Id">Editar</button>
                     <button class="btn btn-danger btn-delete" data-id="@product.Id">Eliminar</button>
@@ -77,7 +74,7 @@
                                class="form-control" />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="divProductType">
                         <label class="form-label">Tipo</label>
 
                         <select id="productTypeId" class="form-select">
@@ -86,7 +83,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="divEntrepreneurship">
                         <label class="form-label">Emprendimiento</label>
 
                         <select id="entrepreneurshipId" class="form-select">
@@ -94,7 +91,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="divFiles">
                         <label class="form-label">Imágenes</label>
 
                         <input id="files"
