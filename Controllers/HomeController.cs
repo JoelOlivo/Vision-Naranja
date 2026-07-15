@@ -16,8 +16,28 @@ namespace VisionNaranja.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var homeViewModel = await _service.GetAsync();
+            var homeViewModel = await _service.GetHomeAsync();
             return View(homeViewModel);
+        }
+
+        public async Task<IActionResult> Entrepreneur(int id)
+        {
+            var entrepreneurViewModel = await _service.GetHomeEntrepreneurAsync(id);
+
+            if (entrepreneurViewModel == null)
+                return NotFound();
+
+            return View(entrepreneurViewModel);
+        }
+
+        public async Task<IActionResult> Entrepreneurship(int id)
+        {
+            var entrepreneurshipViewModel = await _service.GetHomeEntrepreneurshipAsync(id);
+
+            if (entrepreneurshipViewModel == null)
+                return NotFound();
+
+            return View(entrepreneurshipViewModel);
         }
 
         public IActionResult Privacy()

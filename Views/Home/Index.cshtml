@@ -106,14 +106,26 @@
                                  onerror="this.src='/images/default-avatar.png'">
 
                             <div class="branding-text">
-                                <span class="entrepreneur-name">
-                                    Por: @product.EntrepreneurName
-                                </span>
+                                <a class="nav-link" 
+                                    asp-controller="Home" 
+                                    asp-route-id="@product.EntrepreneurId" 
+                                    asp-action="Entrepreneur">
 
-                                <span class="business-name">
-                                    <i class="fa-solid fa-shop me-1"></i>
-                                    @product.EntrepreneurshipName
-                                </span>
+                                    <span class="entrepreneur-name">
+                                        Por: @product.EntrepreneurName
+                                    </span>
+                                </a>
+
+                                <a class="nav-link" 
+                                    asp-controller="Home" 
+                                    asp-route-id="@product.EntrepreneurshipId" 
+                                    asp-action="Entrepreneurship">
+
+                                    <span class="business-name">
+                                        <i class="fa-solid fa-shop me-1"></i>
+                                        @product.EntrepreneurshipName
+                                    </span>
+                                </a>
                             </div>
 
                             <img src="@product.EntrepreneurshipLogoPath"

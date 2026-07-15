@@ -1,0 +1,94 @@
+﻿@using VisionNaranja.ViewModels.Home
+
+@model GetHomeEntrepreneurViewModel
+
+@{
+    ViewData["Title"] = $"Perfil de {Model.Entrepreneur.FullName}";
+}
+
+<div class="profile-wrapper py-5">
+    <div class="container">
+        <div class="mb-4">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-back">
+                <i class="fa-solid fa-arrow-left me-2"></i> Volver al Catálogo
+            </a>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="profile-card shadow-sm p-4 p-md-5 text-center text-md-start">
+                    <div class="row align-items-center g-4">
+
+                        <div class="col-md-4 text-center">
+                            <div class="profile-avatar-container">
+                                <img src="/media/profiles/@Model.Entrepreneur.ProfilePhotoPath"
+                                     alt="Foto de @Model.Entrepreneur.FullName"
+                                     class="profile-avatar-img"
+                                     onerror="this.src='/images/default-avatar.png'">
+                                <div class="avatar-badge" title="Emprendedor Verificado">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <span class="badge badge-orange mb-2">Talento Creativo</span>
+                            <h1 class="profile-name mb-2">@Model.Entrepreneur.FullName</h1>
+                            <p class="profile-tagline text-muted mb-4">
+                                <i class="fa-solid fa-location-dot me-2"></i> Miembro activo de Visión Naranja
+                            </p>
+
+                            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                                @{
+                                    var whatsappText = Uri.EscapeDataString($"Hola {Model.Entrepreneur.FullName}, vi tu perfil en Visión Naranja y me gustaría conocer más sobre tus productos.");
+                                    var whatsappUrl = $"https://wa.me/{Model.Entrepreneur.CellPhoneNumber}?text={whatsappText}";
+                                }
+                                <a href="@whatsappUrl" target="_blank" class="btn btn-whatsapp-profile">
+                                    <i class="fa-brands fa-whatsapp me-2"></i> Contactar por WhatsApp
+                                </a>
+
+                                <a href="tel:@Model.Entrepreneur.CellPhoneNumber" class="btn btn-phone-profile">
+                                    <i class="fa-solid fa-phone me-2"></i> Llamar directo
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="my-4 rgba-orange-line">
+
+                    <div class="profile-bio">
+                        <h4 class="bio-title mb-3"><i class="fa-solid fa-user me-2"></i> Sobre mí</h4>
+                        <p class="bio-text text-muted">
+                            Apasionado por el desarrollo de proyectos locales y la economía naranja. A través de mi trabajo busco reflejar la identidad, el esfuerzo y la innovación de nuestra comunidad. ¡Te invito a explorar mis productos y escribirme directamente para cualquier consulta o pedido personalizado!
+                            @* @Model.Entrepreneur.Description *@
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="info-sidebar-card shadow-sm p-4">
+                    <h5 class="sidebar-title mb-3"><i class="fa-solid fa-shield-halved me-2"></i> Compra Segura</h5>
+                    <p class="small text-muted mb-4">
+                        En Visión Naranja apoyamos el comercio justo y directo. Al contactar al emprendedor:
+                    </p>
+                    <ul class="sidebar-list ps-0">
+                        <li>
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            Trato directo sin intermediarios ni comisiones.
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-comments"></i>
+                            Coordinación de pagos y entregas de mutuo acuerdo.
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-heart"></i>
+                            Apoyo directo al crecimiento del talento local.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

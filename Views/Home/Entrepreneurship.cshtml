@@ -1,0 +1,72 @@
+﻿@using VisionNaranja.ViewModels.Home
+
+@model GetHomeEntrepreneurshipViewModel
+
+@{
+    ViewData["Title"] = Model.Entrepreneurship.Name;
+}
+
+<div class="entrepreneurship-wrapper py-5">
+    <div class="container">
+        <!-- Botón de retorno al catálogo -->
+        <div class="mb-4">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-back">
+                <i class="fa-solid fa-arrow-left me-2"></i> Volver al Catálogo
+            </a>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-10">
+                <!-- TARJETA PRINCIPAL DEL EMPRENDIMIENTO -->
+                <div class="entrepreneurship-card shadow-sm overflow-hidden">
+
+                    <!-- Encabezado con banner de fondo sutil -->
+                    <div class="brand-banner-bg"></div>
+
+                    <div class="p-4 p-md-5 pt-0 brand-content-area text-center text-md-start">
+                        <div class="row align-items-end g-4">
+
+                            <!-- Logo del Emprendimiento (Flota sobre el banner) -->
+                            <div class="col-md-3 text-center">
+                                <div class="brand-logo-container">
+                                    <img src="/media/logos/@Model.Entrepreneurship.LogoPath"
+                                         alt="Logo de @Model.Entrepreneurship.Name"
+                                         class="brand-logo-img"
+                                         onerror="this.src='/images/default-logo.png'">
+                                </div>
+                            </div>
+
+                            <!-- Información principal de la Marca -->
+                            <div class="col-md-9 pb-2">
+                                <span class="badge badge-orange mb-2">Marca Local Registrada</span>
+                                <h1 class="brand-name mb-2">@Model.Entrepreneurship.Name</h1>
+                                <p class="brand-tagline text-muted mb-0">
+                                    <i class="fa-solid fa-store me-2"></i> Vitrina oficial en Visión Naranja
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4 rgba-orange-line">
+
+                        <!-- Descripción e Historia del Negocio -->
+                        <div class="brand-about">
+                            <h4 class="about-title mb-3"><i class="fa-solid fa-circle-info me-2"></i> Nuestra Historia & Propósito</h4>
+                            <p class="about-text text-muted">
+                                @if (string.IsNullOrWhiteSpace(Model.Entrepreneurship.Description))
+                                {
+                                    @:Este emprendimiento aún no ha agregado una descripción detallada. Te invitamos a conocer sus productos y contactar directamente a su creador para recibir más detalles sobre sus servicios y creaciones exclusivas.
+                                }
+                                else
+                                {
+                                    @Model.Entrepreneurship.Description
+                                }
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+/* ==========================================
+   VISTA PERFIL EMPRENDIMIENTO
+   ========================================== */
+.entrepreneurship-wrapper {
+    background-color: #FBF9F6; /* Fondo beige cálido corporativo */
+    min-height: 80vh;
+}
+
+.entrepreneurship-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(230, 95, 43, 0.08);
+    border-radius: 24px;
+}
+
+/* Banner superior decorativo */
+.brand-banner-bg {
+    height: 160px;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #2a303a 100%);
+    position: relative;
+    border-bottom: 4px solid var(--primary-orange);
+}
+
+.brand-content-area {
+    position: relative;
+}
+
+/* Logo flotante que rompe la línea del banner */
+.brand-logo-container {
+    position: relative;
+    margin-top: -80px; /* Sube la mitad del logo sobre el banner */
+    display: inline-block;
+    background-color: #ffffff;
+    padding: 6px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.brand-logo-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 1px solid #E2E8F0;
+    background-color: #ffffff;
+}
+
+/* Tipografía de la Marca */
+.brand-name {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.brand-tagline {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.brand-about {
+    margin-top: 1.5rem;
+}
+
+.about-title {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.about-text {
+    line-height: 1.8;
+    font-size: 1.05rem;
+    text-align: justify;
+}

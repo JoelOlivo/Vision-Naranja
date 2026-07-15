@@ -15,6 +15,8 @@ builder.Services.AddSingleton<DbConnectionFactory>();
 //Repositories
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<ProductMediaRepository>();
+builder.Services.AddScoped<EntrepreneurRepository>();
+builder.Services.AddScoped<EntrepreneurshipRepository>();
 
 //Services
 builder.Services.AddScoped<ProductService>();
