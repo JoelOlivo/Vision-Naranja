@@ -1,6 +1,6 @@
 ﻿@using VisionNaranja.ViewModels.Product
 
-@model IEnumerable<GetProductViewModel>
+@model ProductIndexViewModel
     
 @{
     ViewData["Title"] = "Productos";
@@ -23,7 +23,7 @@
     </thead>
 
     <tbody id="tbodyProduct">
-        @foreach (var product in Model)
+        @foreach (var product in Model.Products)
         {
             <tr>
                 <td>@product.Name</td>
@@ -91,7 +91,10 @@
                         <label class="form-label">Emprendimiento</label>
 
                         <select id="entrepreneurshipId" class="form-select">
-                            <option value="1">emprendimiento test</option>
+                            @foreach (var entrepreneurship in Model.Entrepreneurships)
+                            {
+                                <option value="@entrepreneurship.Id">@entrepreneurship.Name</option>
+                            }
                         </select>
                     </div>
 

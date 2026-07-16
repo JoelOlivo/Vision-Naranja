@@ -11,15 +11,34 @@ namespace VisionNaranja.Services
         private readonly ProductRepository _repository;
         private readonly ProductMediaRepository _productMediaRepository;
         private readonly FileStorageService _fileStorageService;
+        private readonly EntrepreneurshipRepository _entrepreneurshipRepository;
 
         public ProductService(
             ProductRepository repository, 
             ProductMediaRepository productMediaRepository, 
-            FileStorageService fileStorageService)
+            FileStorageService fileStorageService,
+            EntrepreneurshipRepository entrepreneurshipRepository)
         {
             _repository = repository;
             _productMediaRepository = productMediaRepository;
             _fileStorageService = fileStorageService;
+            _entrepreneurshipRepository = entrepreneurshipRepository;
+        }
+
+        public async Task<ProductIndexViewModel> GetAllForIndexAsync()
+        {
+            ProductIndexViewModel viewModel = new()
+            {
+                Products = await _repository.GetAllDetailsAsync(),
+                Entrepreneurships = await _entrepreneurshipRepository.GetAllAsync()
+            };
+
+            return viewModel;
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
+        {
+            return await _repository.GetAllDetailsAsync();
         }
 
         public async Task<IEnumerable<GetProductViewModel>> GetAllByEntrepreneurshipAsync(int entrepreneurshipId)

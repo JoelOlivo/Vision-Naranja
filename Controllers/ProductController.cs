@@ -15,17 +15,17 @@ namespace VisionNaranja.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<GetProductViewModel> products = await _service.GetAllByEntrepreneurshipAsync(1);
+            ProductIndexViewModel viewModel = await _service.GetAllForIndexAsync();
 
-            return View(products);
+            return View(viewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<GetProductViewModel> products = await _service.GetAllByEntrepreneurshipAsync(1);
+            IEnumerable<ProductViewModel> viewModel = await _service.GetAllAsync();
 
-            return Ok(products);
+            return Ok(viewModel);
         }
 
         [HttpGet]

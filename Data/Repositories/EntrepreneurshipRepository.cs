@@ -28,5 +28,21 @@ namespace VisionNaranja.Data.Repositories
 
             return await connection.QueryFirstOrDefaultAsync<EntrepreneurshipViewModel>(sql, new { Id = id });
         }
+
+        public async Task<IEnumerable<EntrepreneurshipViewModel>> GetAllAsync()
+        {
+            const string sql = @"
+                SELECT
+	                id AS Id,
+                    name AS Name,
+                    description AS Description,
+                    logo_path AS LogoPath
+                FROM entrepreneurships
+            ";
+
+            using var connection = _dbConnectionFactory.Create();
+
+            return await connection.QueryAsync<EntrepreneurshipViewModel>(sql);
+        }
     }
 }

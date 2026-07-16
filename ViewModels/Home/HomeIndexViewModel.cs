@@ -2,7 +2,7 @@
 
 namespace VisionNaranja.ViewModels.Home
 {
-    public class GetHomeViewModel
+    public class HomeIndexViewModel
     {
         public IEnumerable<ProductViewModel> Products { get; set; } = [];
     }

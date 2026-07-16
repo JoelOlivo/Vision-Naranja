@@ -1,6 +1,6 @@
 ﻿@using VisionNaranja.ViewModels.Home
 
-@model GetHomeViewModel
+@model HomeIndexViewModel;
 
 @{
     ViewData["Title"] = "Catálogo";
@@ -59,7 +59,7 @@
                                 {
                                     <div class="carousel-item @(index == 0 ? "active" : "") h-100">
                                         <!-- Se asume que MediaPath ya trae la ruta web correcta -->
-                                        <img src="@($"/media{media.MediaPath}")"
+                                        <img src="/media/@media.MediaPath"
                                              class="d-block w-100 h-100 object-fit-cover"
                                              alt="@product.Name - Imagen @(index + 1)">
                                     </div>
@@ -100,10 +100,9 @@
 
                         <!-- INFORMACIÓN DEL EMPRENDEDOR -->
                         <div class="branding-badge mb-3">
-                            <img src="@product.EntrepreneurProfilePhotoPath"
+                            <img src="/media/@product.EntrepreneurProfilePhotoPath"
                                  class="entrepreneur-avatar"
-                                 alt="Foto de @product.EntrepreneurName"
-                                 onerror="this.src='/images/default-avatar.png'">
+                                 alt="Foto de @product.EntrepreneurName">
 
                             <div class="branding-text">
                                 <a class="nav-link" 
@@ -128,10 +127,9 @@
                                 </a>
                             </div>
 
-                            <img src="@product.EntrepreneurshipLogoPath"
+                            <img src="/media/@product.EntrepreneurshipLogoPath"
                                  class="business-logo"
-                                 alt="Logo @product.EntrepreneurshipName"
-                                 onerror="this.src='/images/default-logo.png'">
+                                 alt="Logo @product.EntrepreneurshipName">
                         </div>
 
                         <!-- DETALLES DEL PRODUCTO -->

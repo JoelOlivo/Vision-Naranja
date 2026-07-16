@@ -2,7 +2,7 @@
 
 namespace VisionNaranja.ViewModels.Home
 {
-    public class GetHomeEntrepreneurViewModel
+    public class HomeEntrepreneurViewModel
     {
         public EntrepreneurViewModel Entrepreneur { get; set; } = new();
     }

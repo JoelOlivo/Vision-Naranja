@@ -1,6 +1,6 @@
 ﻿@using VisionNaranja.ViewModels.Home
 
-@model GetHomeEntrepreneurViewModel
+@model HomeEntrepreneurViewModel
 
 @{
     ViewData["Title"] = $"Perfil de {Model.Entrepreneur.FullName}";
@@ -21,10 +21,9 @@
 
                         <div class="col-md-4 text-center">
                             <div class="profile-avatar-container">
-                                <img src="/media/profiles/@Model.Entrepreneur.ProfilePhotoPath"
+                                <img src="/media/@Model.Entrepreneur.ProfilePhotoPath"
                                      alt="Foto de @Model.Entrepreneur.FullName"
-                                     class="profile-avatar-img"
-                                     onerror="this.src='/images/default-avatar.png'">
+                                     class="profile-avatar-img">
                                 <div class="avatar-badge" title="Emprendedor Verificado">
                                     <i class="fa-solid fa-circle-check"></i>
                                 </div>

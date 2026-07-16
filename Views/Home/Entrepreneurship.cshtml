@@ -1,6 +1,6 @@
 ﻿@using VisionNaranja.ViewModels.Home
 
-@model GetHomeEntrepreneurshipViewModel
+@model HomeEntrepreneurshipViewModel
 
 @{
     ViewData["Title"] = Model.Entrepreneurship.Name;
@@ -29,10 +29,9 @@
                             <!-- Logo del Emprendimiento (Flota sobre el banner) -->
                             <div class="col-md-3 text-center">
                                 <div class="brand-logo-container">
-                                    <img src="/media/logos/@Model.Entrepreneurship.LogoPath"
+                                    <img src="/media/@Model.Entrepreneurship.LogoPath"
                                          alt="Logo de @Model.Entrepreneurship.Name"
-                                         class="brand-logo-img"
-                                         onerror="this.src='/images/default-logo.png'">
+                                         class="brand-logo-img">
                                 </div>
                             </div>
 

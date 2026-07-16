@@ -22,40 +22,40 @@ namespace VisionNaranja.Services
             _entrepreneurshipRepository = entrepreneurshipRepository;
         }
 
-        public async Task<GetHomeViewModel> GetHomeAsync()
+        public async Task<HomeIndexViewModel> GetHomeAsync()
         {
             var products = await _productRepository.GetAllDetailsAsync();
 
             foreach (var product in products)
                 product.Media = await _productMediaRepository.GetByProductIdAsync(product.Id);
 
-            return new GetHomeViewModel
+            return new HomeIndexViewModel
             {
                 Products = products
             };
         }
 
-        public async Task<GetHomeEntrepreneurshipViewModel?> GetHomeEntrepreneurshipAsync(int entrepreneurshipId)
+        public async Task<HomeEntrepreneurshipViewModel?> GetHomeEntrepreneurshipAsync(int entrepreneurshipId)
         {
             var entrepreneurship = await _entrepreneurshipRepository.GetByIdAsync(entrepreneurshipId);
 
             if (entrepreneurship == null)
                 return null;
 
-            return new GetHomeEntrepreneurshipViewModel
+            return new HomeEntrepreneurshipViewModel
             {
                 Entrepreneurship = entrepreneurship
             };
         }
 
-        public async Task<GetHomeEntrepreneurViewModel?> GetHomeEntrepreneurAsync(int entrepreneurId)
+        public async Task<HomeEntrepreneurViewModel?> GetHomeEntrepreneurAsync(int entrepreneurId)
         {
             var entrepreneur = await _entrepreneurRepository.GetByIdAsync(entrepreneurId);
 
             if (entrepreneur == null)
                 return null;
 
-            return new GetHomeEntrepreneurViewModel
+            return new HomeEntrepreneurViewModel
             {
                 Entrepreneur = entrepreneur
             };
